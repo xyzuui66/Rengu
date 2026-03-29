@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Rengu — WhatsApp MD Bot Engine</title>
+<link rel="stylesheet" href="css/main.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" defer></script>
+</head>
+<body>
+
+<!-- ═══ SIDEBAR ═══ -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-icon">R</div>
+    <div class="logo-text">
+      <div class="logo-main">RENGU</div>
+      <div class="logo-sub">WA Bot Engine</div>
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="nav-item active" data-section="dashboard">
+      <span class="nav-icon">⊞</span><span class="nav-label">Dashboard</span>
+    </a>
+    <a class="nav-item" data-section="identitas">
+      <span class="nav-icon">◉</span><span class="nav-label">Identitas Bot</span>
+    </a>
+    <a class="nav-item" data-section="koneksi">
+      <span class="nav-icon">⌁</span><span class="nav-label">Koneksi</span>
+    </a>
+    <a class="nav-item" data-section="menu">
+      <span class="nav-icon">≡</span><span class="nav-label">Menu & Commands</span>
+    </a>
+    <a class="nav-item" data-section="fitur">
+      <span class="nav-icon">⚡</span><span class="nav-label">Fitur</span>
+      <span class="nav-badge" id="feat-count">0</span>
+    </a>
+    <a class="nav-item" data-section="store">
+      <span class="nav-icon">◈</span><span class="nav-label">Store & Payment</span>
+    </a>
+    <a class="nav-item" data-section="ai">
+      <span class="nav-icon">◎</span><span class="nav-label">AI Settings</span>
+    </a>
+    <a class="nav-item" data-section="poster">
+      <span class="nav-icon">▣</span><span class="nav-label">Poster & Tema</span>
+    </a>
+    <a class="nav-item" data-section="download">
+      <span class="nav-icon">↓</span><span class="nav-label">Generate & Download</span>
+    </a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="sf-version">v3.0.0 — 5000+ fitur</div>
+    <div class="sf-note">Pterodactyl Ready</div>
+  </div>
+</aside>
+
+<!-- ═══ MAIN ═══ -->
+<main class="main" id="main">
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <button class="menu-toggle" id="menu-toggle">☰</button>
+    <div class="topbar-title" id="topbar-title">Dashboard</div>
+    <div class="topbar-stats">
+      <span id="tb-feat">0 fitur aktif</span>
+      <span class="tb-dot">·</span>
+      <span id="tb-bot">BotName</span>
+    </div>
+  </div>
+
+  <!-- ═══ SECTION: DASHBOARD ═══ -->
+  <section class="section active" id="sec-dashboard">
+    <div class="section-header">
+      <h1>Dashboard</h1>
+      <p>Selamat datang di <strong>Rengu</strong> — Generator bot WhatsApp MD terlengkap</p>
+    </div>
+
+    <div class="dash-grid">
+      <div class="dash-card" onclick="goTo('fitur')">
+        <div class="dc-icon" style="color:#25D366">⚡</div>
+        <div class="dc-num" id="dc-enabled">0</div>
+        <div class="dc-label">Fitur Aktif</div>
+      </div>
+      <div class="dash-card" onclick="goTo('fitur')">
+        <div class="dc-icon" style="color:#3b82f6">◉</div>
+        <div class="dc-num" id="dc-total">5000+</div>
+        <div class="dc-label">Total Fitur</div>
+      </div>
+      <div class="dash-card" onclick="goTo('menu')">
+        <div class="dc-icon" style="color:#f59e0b">≡</div>
+        <div class="dc-num">14</div>
+        <div class="dc-label">Kategori Menu</div>
+      </div>
+      <div class="dash-card" onclick="goTo('download')">
+        <div class="dc-icon" style="color:#ef4444">↓</div>
+        <div class="dc-num">30+</div>
+        <div class="dc-label">File Generated</div>
+      </div>
+    </div>
+
+    <div class="dash-cats" id="dash-cats">
+      <!-- filled by JS -->
+    </div>
+
+    <div class="info-box">
+      <div class="ib-title">⚡ Cara Penggunaan</div>
+      <div class="ib-steps">
+        <div class="step"><span class="step-n">1</span><span>Isi <strong>Identitas Bot</strong> — nama, owner, prefix</span></div>
+        <div class="step"><span class="step-n">2</span><span>Pilih <strong>Metode Koneksi</strong> — QR atau Pairing Code</span></div>
+        <div class="step"><span class="step-n">3</span><span>Sesuaikan <strong>Menu & Commands</strong> sesuai keinginan</span></div>
+        <div class="step"><span class="step-n">4</span><span>Aktifkan <strong>Fitur</strong> yang kamu inginkan dari 5000+ fitur</span></div>
+        <div class="step"><span class="step-n">5</span><span>Klik <strong>Generate & Download</strong> → Upload ke Pterodactyl</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ SECTION: IDENTITAS ═══ -->
+  <section class="section" id="sec-identitas">
+    <div class="section-header">
+      <h1>Identitas Bot</h1>
+      <p>Konfigurasi dasar bot kamu</p>
+    </div>
+    <div class="form-grid">
+      <div class="form-col">
+        <div class="form-group">
+          <label>Nama Bot</label>
+          <input id="botName" value="NekoBot" placeholder="NekoBot"/>
+        </div>
+        <div class="form-group">
+          <label>Nama Owner</label>
+          <input id="ownerName" value="Owner" placeholder="Nama kamu"/>
+        </div>
+        <div class="form-group">
+          <label>Nomor Owner <small>(format 628xxx, bisa lebih dari 1 pisah koma)</small></label>
+          <input id="ownerNumber" value="628123456789" placeholder="628123456789,628987654321"/>
+        </div>
+        <div class="form-group">
+          <label>Prefix Perintah</label>
+          <input id="prefix" value="." placeholder=". atau ! atau /"/>
+        </div>
+        <div class="form-group">
+          <label>Deskripsi Bot</label>
+          <textarea id="description" rows="3" placeholder="Deskripsi singkat bot kamu...">Bot WA MD terbaik dengan 5000+ fitur</textarea>
+        </div>
+        <div class="form-group">
+          <label>Footer Pesan</label>
+          <input id="footer" value="Powered by Rengu Engine" placeholder="Footer di setiap pesan"/>
+        </div>
+      </div>
+      <div class="form-col">
+        <div class="form-group">
+          <label>Watermark Teks</label>
+          <input id="watermark" value="© NekoBot" placeholder="© NamaBotmu"/>
+        </div>
+        <div class="form-group">
+          <label>Watermark Stiker (pack name)</label>
+          <input id="packName" value="NekoBot Sticker" placeholder="Nama pack stiker"/>
+        </div>
+        <div class="form-group">
+          <label>Author Stiker</label>
+          <input id="authorName" value="Creator" placeholder="Nama pembuat stiker"/>
+        </div>
+        <div class="form-group">
+          <label>Watermark Stiker (teks kecil)</label>
+          <input id="watermarkStk" value="© NekoBot" placeholder="Teks watermark di stiker"/>
+        </div>
+        <div class="form-group">
+          <label>Timezone</label>
+          <select id="timezone">
+            <option value="Asia/Jakarta" selected>Asia/Jakarta (WIB)</option>
+            <option value="Asia/Makassar">Asia/Makassar (WITA)</option>
+            <option value="Asia/Jayapura">Asia/Jayapura (WIT)</option>
+            <option value="Asia/Singapore">Asia/Singapore</option>
+            <option value="Asia/Tokyo">Asia/Tokyo</option>
+          </select>
+        </div>
+        <!-- Preview Card -->
+        <div class="preview-card" id="preview-card">
+          <div class="pc-tag">PREVIEW</div>
+          <div class="pc-name" id="pc-name">NekoBot</div>
+          <div class="pc-owner" id="pc-owner">👤 Owner</div>
+          <div class="pc-wm" id="pc-wm">© NekoBot</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ SECTION: KONEKSI ═══ -->
+  <section class="section" id="sec-koneksi">
+    <div class="section-header">
+      <h1>Metode Koneksi</h1>
+      <p>Pilih cara menghubungkan bot dengan nomor WhatsApp</p>
+    </div>
+    <div class="conn-options">
+      <div class="conn-opt active" data-method="both" onclick="selectConn(this)">
+        <div class="co-check"></div>
+        <div class="co-icon">🔀</div>
+        <div class="co-info">
+          <div class="co-title">QR Code + Pairing Code</div>
+          <div class="co-desc">Bot generate QR <em>dan</em> pairing code sekaligus. Kamu bisa pilih mau pakai yang mana saat pertama run. Paling fleksibel.</div>
+        </div>
+        <div class="co-rec">✦ Rekomendasi</div>
+      </div>
+      <div class="conn-opt" data-method="qr" onclick="selectConn(this)">
+        <div class="co-check"></div>
+        <div class="co-icon">📷</div>
+        <div class="co-info">
+          <div class="co-title">QR Code Saja</div>
+          <div class="co-desc">Scan QR code yang muncul di console Pterodactyl dengan WhatsApp. Buka WA → Perangkat Tertaut → Tautkan Perangkat → Scan.</div>
+        </div>
+      </div>
+      <div class="conn-opt" data-method="pairing" onclick="selectConn(this)">
+        <div class="co-check"></div>
+        <div class="co-icon">🔑</div>
+        <div class="co-info">
+          <div class="co-title">Pairing Code Saja</div>
+          <div class="co-desc">Bot tampilkan kode 8 digit di console. Buka WA → Perangkat Tertaut → Tautkan Perangkat dengan Nomor → Masukkan kode.</div>
+        </div>
+      </div>
+    </div>
+    <div class="info-box mt20">
+      <div class="ib-title">📋 Info Session</div>
+      <div class="ib-body">
+        Session disimpan otomatis di folder <code>./session/</code> di server Pterodactyl.<br/>
+        Jika bot logout atau perlu scan ulang → hapus folder <code>session/</code> dan restart server.<br/>
+        <strong>Jangan hapus folder session jika bot masih berjalan normal!</strong>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ SECTION: MENU ═══ -->
+  <section class="section" id="sec-menu">
+    <div class="section-header">
+      <h1>Menu & Commands</h1>
+      <p>Semua command menu bisa dikustomisasi. Prefix "<span id="prev-prefix">.</span>" ditambah otomatis.</p>
+    </div>
+    <div class="menu-grid" id="menu-grid">
+      <!-- filled by JS -->
+    </div>
+    <div class="menu-preview-box">
+      <div class="mpb-title">Preview .allmenu</div>
+      <div class="mpb-content" id="menu-preview-text"></div>
+    </div>
+  </section>
+
+  <!-- ═══ SECTION: FITUR ═══ -->
+  <section class="section" id="sec-fitur">
+    <div class="section-header">
+      <h1>Pilih Fitur</h1>
+      <p>Aktifkan fitur yang kamu butuhkan. Total: <strong id="total-feat-count">5000+</strong> fitur tersedia.</p>
+    </div>
+    <div class="feat-toolbar">
+      <input class="feat-search" id="feat-search" placeholder="🔍 Cari fitur..." oninput="filterFeatures(this.value)"/>
+      <button class="btn-sm btn-green" onclick="toggleAll(true)">Aktifkan Semua</button>
+      <button class="btn-sm btn-gray" onclick="toggleAll(false)">Matikan Semua</button>
+      <span class="feat-active-count">Aktif: <strong id="feat-active-num">0</strong></span>
+    </div>
+    <div id="feat-categories">
+      <!-- filled by JS -->
+    </div>
+  </section>
+
+  <!-- ═══ SECTION: STORE ═══ -->
+  <section class="section" id="sec-store">
+    <div class="section-header">
+      <h1>Store & Payment</h1>
+      <p>Konfigurasi toko dan metode pembayaran bot</p>
+    </div>
+    <div class="toggle-row">
+      <div>
+        <div class="tr-title">Aktifkan Fitur Toko</div>
+        <div class="tr-desc">Produk, pembelian, konfirmasi bayar</div>
+      </div>
+      <div class="toggle" id="tog-store" onclick="toggleStore()"></div>
+    </div>
+    <div class="toggle-row">
+      <div>
+        <div class="tr-title">Sistem Premium User</div>
+        <div class="tr-desc">User premium bisa akses fitur eksklusif</div>
+      </div>
+      <div class="toggle active" id="tog-premium" onclick="this.classList.toggle('active')"></div>
+    </div>
+
+    <div class="form-group mt20">
+      <label>Produk Toko <small>(format: ID|Nama|Harga|Deskripsi, satu baris satu produk)</small></label>
+      <textarea id="products" rows="6" style="font-family:monospace;font-size:12px">P001|Premium 1 Bulan|25000|Akses premium 30 hari
+P002|Premium 3 Bulan|60000|Akses premium 90 hari
+P003|Script Bot WA|150000|Script bot custom dari owner
+P004|Sewa Bot 1 Bulan|75000|Bot WA dikelola owner untuk kamu
+P005|Joki Game|50000|Joki akun game sesukamu</textarea>
+    </div>
+
+    <div class="section-sub">Metode Pembayaran</div>
+    <div class="pay-grid">
+      <div class="form-group"><label>💙 Dana</label><input id="pay-dana" placeholder="Nomor Dana"/></div>
+      <div class="form-group"><label>💜 OVO</label><input id="pay-ovo" placeholder="Nomor OVO"/></div>
+      <div class="form-group"><label>💚 GoPay</label><input id="pay-gopay" placeholder="Nomor GoPay"/></div>
+      <div class="form-group"><label>🏦 BCA</label><input id="pay-bca" placeholder="Nomor rekening BCA"/></div>
+      <div class="form-group"><label>🏦 Mandiri</label><input id="pay-mandiri" placeholder="Nomor rekening Mandiri"/></div>
+      <div class="form-group"><label>🏦 BRI</label><input id="pay-bri" placeholder="Nomor rekening BRI"/></div>
+      <div class="form-group"><label>📱 QRIS</label><input id="pay-qris" placeholder="Link/deskripsi QRIS"/></div>
+      <div class="form-group"><label>🏦 BSI</label><input id="pay-bsi" placeholder="Nomor rekening BSI"/></div>
+    </div>
+  </section>
+
+  <!-- ═══ SECTION: AI ═══ -->
+  <section class="section" id="sec-ai">
+    <div class="section-header">
+      <h1>AI Settings</h1>
+      <p>Konfigurasi AI provider untuk fitur chat dan gambar</p>
+    </div>
+    <div class="ai-providers">
+      <div class="ai-opt active" data-prov="free" onclick="selectAI(this)">
+        <div class="ao-check"></div>
+        <div class="ao-head">🆓 Free (Pollinations AI)</div>
+        <div class="ao-desc">Tanpa API key. Chat + image generation gratis. Kecepatan terbatas.</div>
+      </div>
+      <div class="ai-opt" data-prov="groq" onclick="selectAI(this)">
+        <div class="ao-check"></div>
+        <div class="ao-head">⚡ Groq (Llama 3, Gemma)</div>
+        <div class="ao-desc">Gratis dengan API key dari <strong>console.groq.com</strong>. Cepat dan akurat.</div>
+        <div class="ao-input" id="groq-input" style="display:none">
+          <input id="groqKey" placeholder="gsk_xxxxxxxxxxxxxxxxxxxxxxxx"/>
+        </div>
+      </div>
+      <div class="ai-opt" data-prov="openai" onclick="selectAI(this)">
+        <div class="ao-check"></div>
+        <div class="ao-head">🤖 OpenAI (GPT-3.5 / GPT-4)</div>
+        <div class="ao-desc">Berbayar. API key dari <strong>platform.openai.com</strong>. Paling powerful.</div>
+        <div class="ao-input" id="openai-input" style="display:none">
+          <input id="openaiKey" placeholder="sk-xxxxxxxxxxxxxxxxxxxxxxxx"/>
+        </div>
+      </div>
+      <div class="ai-opt" data-prov="gemini" onclick="selectAI(this)">
+        <div class="ao-check"></div>
+        <div class="ao-head">💎 Google Gemini</div>
+        <div class="ao-desc">Gratis dengan kuota. API key dari <strong>aistudio.google.com</strong>.</div>
+        <div class="ao-input" id="gemini-input" style="display:none">
+          <input id="geminiKey" placeholder="AIzaxxxxxxxxxxxxxxxxx"/>
+        </div>
+      </div>
+    </div>
+    <div class="form-group mt20">
+      <label>Nama Karakter AI (personality)</label>
+      <input id="aiPersona" value="asisten pintar yang ramah" placeholder="asisten pintar yang ramah"/>
+    </div>
+    <div class="form-group">
+      <label>Bahasa Default Jawaban AI</label>
+      <select id="aiLang">
+        <option value="id" selected>Indonesia (id)</option>
+        <option value="en">English (en)</option>
+        <option value="mixed">Campur (id + en)</option>
+      </select>
+    </div>
+  </section>
+
+  <!-- ═══ SECTION: POSTER ═══ -->
+  <section class="section" id="sec-poster">
+    <div class="section-header">
+      <h1>Poster & Tema</h1>
+      <p>Customisasi tampilan visual saat bot kirim menu</p>
+    </div>
+    <div class="poster-styles">
+      <div class="ps-item active" data-style="gradient" onclick="selectPoster(this)">
+        <div class="psi-prev gradient-prev"></div>
+        <div class="psi-name">Gradient</div>
+      </div>
+      <div class="ps-item" data-style="dark" onclick="selectPoster(this)">
+        <div class="psi-prev dark-prev"></div>
+        <div class="psi-name">Dark</div>
+      </div>
+      <div class="ps-item" data-style="neon" onclick="selectPoster(this)">
+        <div class="psi-prev neon-prev"></div>
+        <div class="psi-name">Neon</div>
+      </div>
+      <div class="ps-item" data-style="minimal" onclick="selectPoster(this)">
+        <div class="psi-prev minimal-prev"></div>
+        <div class="psi-name">Minimal</div>
+      </div>
+    </div>
+    <div class="color-pickers">
+      <div class="form-group">
+        <label>Warna Utama</label>
+        <div class="color-row">
+          <input type="color" id="color1" value="#25D366"/>
+          <input id="color1-hex" value="#25D366" maxlength="7" oninput="document.getElementById('color1').value=this.value"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Warna Kedua</label>
+        <div class="color-row">
+          <input type="color" id="color2" value="#075E54"/>
+          <input id="color2-hex" value="#075E54" maxlength="7" oninput="document.getElementById('color2').value=this.value"/>
+        </div>
+      </div>
+    </div>
+    <div class="poster-live-preview">
+      <div class="plp-title">Live Preview Poster</div>
+      <div class="poster-demo" id="poster-demo">
+        <div class="pd-inner">
+          <div class="pd-tag">MENU</div>
+          <div class="pd-name" id="pd-name">NekoBot</div>
+          <div class="pd-count">42 perintah tersedia</div>
+          <div class="pd-div"></div>
+          <div class="pd-owner" id="pd-owner">👤 Owner</div>
+          <div class="pd-wm" id="pd-wm">© NekoBot</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ SECTION: DOWNLOAD ═══ -->
+  <section class="section" id="sec-download">
+    <div class="section-header">
+      <h1>Generate & Download</h1>
+      <p>Generate script bot dan download sebagai ZIP siap pakai</p>
+    </div>
+
+    <!-- Summary -->
+    <div class="summary-box">
+      <div class="sb-title">📋 Ringkasan Konfigurasi</div>
+      <div class="sb-grid" id="summary-grid"><!-- filled by JS --></div>
+    </div>
+
+    <!-- File list -->
+    <div class="file-list-box">
+      <div class="flb-title">📁 File yang akan dibuat</div>
+      <div class="file-tree" id="file-tree"><!-- filled by JS --></div>
+    </div>
+
+    <!-- Progress -->
+    <div class="progress-box" id="progress-box" style="display:none">
+      <div class="pb-bar-wrap"><div class="pb-bar" id="pb-bar"></div></div>
+      <div class="pb-status" id="pb-status">Mempersiapkan...</div>
+    </div>
+
+    <!-- Success -->
+    <div class="success-box" id="success-box" style="display:none">
+      <div class="suc-icon">✓</div>
+      <div class="suc-title">Download Berhasil!</div>
+      <div class="suc-desc">Ekstrak ZIP → npm install → npm start → scan QR / masukkan pairing code → Bot aktif!</div>
+    </div>
+
+    <!-- Download Button -->
+    <button class="btn-download" id="btn-download" onclick="generateAndDownload()">
+      <span class="btn-dl-icon">↓</span>
+      <span id="btn-dl-text">Generate & Download ZIP</span>
+    </button>
+
+    <div class="install-steps">
+      <div class="is-title">🚀 Instalasi di Pterodactyl</div>
+      <div class="is-grid">
+        <div class="is-step"><div class="is-n">1</div><div>Buat server baru dengan egg Node.js</div></div>
+        <div class="is-step"><div class="is-n">2</div><div>Upload ZIP ke File Manager → Extract Here</div></div>
+        <div class="is-step"><div class="is-n">3</div><div>Console → ketik <code>npm install</code> → Enter</div></div>
+        <div class="is-step"><div class="is-n">4</div><div>Start server → lihat console output</div></div>
+        <div class="is-step"><div class="is-n">5</div><div>Scan QR atau masukkan pairing code</div></div>
+        <div class="is-step"><div class="is-n">6</div><div>Bot aktif! Kirim pesan ke bot untuk test</div></div>
+      </div>
+    </div>
+  </section>
+
+</main><!-- /main -->
+
+<!-- Load JS -->
+<script src="js/features-data.js"></script>
+<script src="js/poster.js"></script>
+<script src="js/assets-gen.js"></script>
+<script src="js/features-extra.js"></script>
+<script src="js/generator.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
